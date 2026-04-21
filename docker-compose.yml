@@ -5,11 +5,14 @@ services:
     container_name: bitcoin-coder-bitcoind
     # Reinicia automaticamente, exceto se você parar manualmente.
     restart: unless-stopped
-    # Força uso do arquivo de configuração versionado no projeto.
+    # Credenciais RPC vêm do .env (mesmas variáveis do backend) para não dessincronizar.
+    # O Compose expande ${...} usando o arquivo .env na raiz do projeto.
     command:
       - -conf=/bitcoin/bitcoin.conf
       - -datadir=/bitcoin/data
       - -printtoconsole=1
+      - -rpcuser=${BITCOIN_RPC_USER:-bitcoinrpc}
+      - -rpcpassword=${BITCOIN_RPC_PASSWORD:-bitcoinrpcdevpassword}
     volumes:
       # Configuração do bitcoind vinda do repo (somente leitura no container).
       - ./infra/bitcoin/bitcoin.conf:/bitcoin/bitcoin.conf:ro

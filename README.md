@@ -17,7 +17,7 @@ Playground para **JSON-RPC** e **eventos ZMQ** (`hashblock`, `hashtx`) de um nó
 
 ## Quick start
 
-1. Copie o env de exemplo e alinhe credenciais com `infra/bitcoin/bitcoin.conf` se mudar algo:
+1. Copie o env de exemplo. **`BITCOIN_RPC_USER` / `BITCOIN_RPC_PASSWORD`** alimentam o **backend** e, pelo `docker-compose`, também o **bitcoind** (`-rpcuser` / `-rpcpassword`), para não haver 401 por credencial divergente.
 
 ```bash
 cp .env.example .env
