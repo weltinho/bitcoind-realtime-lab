@@ -1,0 +1,81 @@
+services:
+  # Nó Bitcoin Core em regtest para uso local.
+  bitcoind:
+    image: bitcoin/bitcoin:31.0  #Versão fixa, comportamento mais previsivel
+    container_name: bitcoin-coder-bitcoind
+    # Reinicia automaticamente, exceto se você parar manualmente.
+    restart: unless-stopped
+    # Força uso do arquivo de configuração versionado no projeto.
+    command:
+      - -conf=/bitcoin/bitcoin.conf
+      - -datadir=/bitcoin/data
+      - -printtoconsole=1
+    volumes:
+      # Configuração do bitcoind vinda do repo (somente leitura no container).
+      - ./infra/bitcoin/bitcoin.conf:/bitcoin/bitcoin.conf:ro
+      # Volume nomeado para persistir a blockchain/dados entre reinícios.
+      - bitcoin-data:/bitcoin/data
+    ports:
+      # P2P em regtest (manter habilitado ajuda cenários de sincronização realistas).
+      - "18444:18444"
+    expose:
+      # RPC disponível apenas para containers na rede Docker deste compose.
+      - "18443"
+      # ZMQ para blocos disponível apenas na rede Docker privada.
+      - "28332"
+      # ZMQ para transações disponível apenas na rede Docker privada.
+      - "28333"
+
+  # API FastAPI que conversa com o bitcoind via RPC e ZMQ.
+  backend:
+    build:
+      context: ./backend
+    container_name: bitcoin-coder-backend
+    restart: unless-stopped
+    # Carrega variáveis de ambiente da aplicação backend.
+    env_file:
+      - .env
+    # Ordem de startup (não garante readiness do RPC/ZMQ).
+    depends_on:
+      - bitcoind
+    volumes:
+      # Bind mount para desenvolvimento com hot reload do código.
+      - ./backend:/app
+    ports:
+      # API HTTP/WebSocket exposta localmente.
+      - "8000:8000"
+    # Servidor ASGI em modo de desenvolvimento (auto-reload).
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend didático (RPC playground + stream de eventos ZMQ via WebSocket).
+  frontend:
+    build:
+      context: ./frontend
+    container_name: bitcoin-coder-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    expose:
+      - "5173"
+
+  # Gateway web com HTTPS local e reverse proxy para frontend/backend.
+  caddy:
+    image: caddy:2.8
+    container_name: bitcoin-coder-caddy
+    restart: unless-stopped
+    depends_on:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  # Volume persistente usado pelo serviço bitcoind.
+  bitcoin-data:
+  caddy-data:
+  caddy-config:

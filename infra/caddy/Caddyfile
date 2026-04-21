@@ -1,0 +1,22 @@
+http://localhost {
+	redir https://{host}{uri}
+}
+
+https://localhost {
+	tls internal
+
+	# Todas as chamadas da API passam pelo backend.
+	handle_path /api/* {
+		reverse_proxy backend:8000
+	}
+
+	# WebSocket de eventos em tempo real.
+	handle /ws/* {
+		reverse_proxy backend:8000
+	}
+
+	# Frontend React (Vite dev server no container frontend).
+	handle {
+		reverse_proxy frontend:5173
+	}
+}

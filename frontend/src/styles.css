@@ -1,0 +1,390 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f9;
+}
+
+.layout {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0.65rem 0.85rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 100dvh;
+  min-height: 100vh;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.hero {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #0f2d58, #1b4c85);
+  color: #f8fafc;
+  flex-shrink: 0;
+}
+
+.hero-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.hero-logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: min(100%, 440px);
+  flex-shrink: 0;
+}
+
+.hero-copy {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.hero h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.hero-copy p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.app-logo-pulse-dot {
+  animation: app-logo-pulse 1.15s ease-in-out infinite;
+}
+
+.app-logo-pulse-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.app-logo-pulse-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes app-logo-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hero-meta {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: #fde68a;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #d8e0eb;
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+  box-shadow: 0 4px 14px rgba(15, 37, 64, 0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: calc(100dvh - 7rem);
+  max-height: calc(100vh - 7rem);
+  overflow: hidden;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  color: #0f2d58;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.panel-hint {
+  margin: 0.2rem 0 0.35rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.method-description {
+  color: #334155;
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.method-description a {
+  color: #1b4c85;
+}
+
+.method-toolbar {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.badge {
+  border: 1px solid #d5dee9;
+  background: #f2f5f9;
+  color: #334155;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.45rem;
+  align-items: center;
+}
+
+input,
+select,
+textarea,
+button {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+}
+
+input {
+  background: #ffffff;
+  color: #1e293b;
+  min-width: 0;
+  flex: 1;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.88rem;
+}
+
+select,
+textarea {
+  background: #ffffff;
+  color: #1e293b;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.88rem;
+}
+
+select {
+  min-width: 260px;
+}
+
+.method-select {
+  min-width: 320px;
+}
+
+.method-combobox {
+  position: relative;
+}
+
+.method-combobox-trigger {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1e293b;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.method-combobox-menu {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  margin-top: 0.35rem;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.55rem;
+  box-shadow: 0 12px 26px rgba(15, 37, 64, 0.16);
+}
+
+.method-options {
+  margin-top: 0.45rem;
+  max-height: min(42vh, 220px);
+  overflow: auto;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.method-option {
+  text-align: left;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1f2937;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.82rem;
+}
+
+.method-option.active {
+  background: #f7931a;
+  border-color: #e5850d;
+  color: #ffffff;
+}
+
+.method-empty {
+  color: #64748b;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 0.45rem;
+}
+
+.rpc-params {
+  min-height: 4.25rem;
+  max-height: 6.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+button {
+  background: #f7931a;
+  color: #ffffff;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  border-color: #e5850d;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+button:hover:not(:disabled) {
+  background: #e5850d;
+}
+
+button.button-ws-start {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #ffffff;
+}
+
+button.button-ws-start:hover:not(:disabled) {
+  background: #15803d;
+  border-color: #166534;
+}
+
+button.button-ws-stop {
+  background: #dc2626;
+  border-color: #b91c1c;
+  color: #ffffff;
+}
+
+button.button-ws-stop:hover:not(:disabled) {
+  background: #b91c1c;
+  border-color: #991b1b;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.85rem;
+  border: 1px solid #cbd5e1;
+}
+
+.status.connected {
+  color: #166534;
+  border-color: #22c55e;
+  background: #dcfce7;
+}
+
+.status.connecting {
+  color: #92400e;
+  border-color: #f59e0b;
+  background: #fef3c7;
+}
+
+.status.disconnected {
+  color: #7f1d1d;
+  border-color: #ef4444;
+  background: #fee2e2;
+}
+
+.error {
+  color: #b91c1c;
+  margin: 0.35rem 0;
+  font-size: 0.82rem;
+}
+
+pre {
+  margin: 0;
+  background: #f8fafc;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.panel-pre {
+  flex: 1 1 auto;
+  min-height: 120px;
+  max-height: none;
+  margin-top: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.method-combobox-menu input {
+  min-width: 0;
+  width: 100%;
+}
