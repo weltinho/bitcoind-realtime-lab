@@ -1,8 +1,12 @@
-http://localhost {
+# :80 e :443 escutam em todas as interfaces do container (0.0.0.0).
+# Assim o mapeamento Docker "80:80" / "443:443" recebe tráfego externo (IP público da EC2)
+# e também continua funcionando com https://localhost no seu notebook.
+
+:80 {
 	redir https://{host}{uri}
 }
 
-https://localhost {
+:443 {
 	tls internal
 
 	# Todas as chamadas da API passam pelo backend.

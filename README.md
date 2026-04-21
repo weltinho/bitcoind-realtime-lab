@@ -40,9 +40,9 @@ curl http://localhost:8000/rpc/getblockchaininfo
 
 `https://localhost` (aceite o certificado local do Caddy na primeira vez).
 
-## HTTPS (local)
+## HTTPS (local / IP)
 
-O Caddy usa **CA interna**; o aviso do navegador é esperado em ambiente de estudo. Em produção, use **domínio público** e certificado válido (ex.: Let’s Encrypt).
+O Caddy escuta em **`:80` / `:443`** (qualquer `Host`), para o Docker encaminhar tráfego da EC2 pelo IP público. Usa **`tls internal`**; o aviso do navegador é esperado sem domínio com Let’s Encrypt. Em produção, prefira **domínio + ACME**.
 
 ## Testes (backend)
 
