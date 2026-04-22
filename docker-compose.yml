@@ -65,6 +65,10 @@ services:
     image: caddy:2.8
     container_name: bitcoin-coder-caddy
     restart: unless-stopped
+    # Lista de endereços do site (Caddyfile {$CADDY_SITE_ADDRESSES}). Inclua o IPv4
+    # público da EC2 para https://SEU_IP (ex.: após vírgula: ", 3.14.159.26").
+    environment:
+      CADDY_SITE_ADDRESSES: '${CADDY_SITE_ADDRESSES:-localhost, 127.0.0.1, [::1]}'
     depends_on:
       - frontend
       - backend

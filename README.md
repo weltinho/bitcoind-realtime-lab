@@ -44,6 +44,8 @@ curl http://localhost:8000/rpc/getblockchaininfo
 
 O Caddy escuta em **`:80` / `:443`** (qualquer `Host`), para o Docker encaminhar tráfego da EC2 pelo IP público. Usa **`tls internal`**; o aviso do navegador é esperado sem domínio com Let’s Encrypt. Em produção, prefira **domínio + ACME**.
 
+Para **`https://<IPv4-público>`** (ex. na EC2), o certificado interno tem de incluir esse IP. No `.env`, defina **`CADDY_SITE_ADDRESSES`** com o IP no fim da lista (ver `.env.example`). Depois: `docker compose up -d --force-recreate caddy`.
+
 ## Testes (backend)
 
 Dentro do container (como no dia a dia do projeto):
