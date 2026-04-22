@@ -1,12 +1,17 @@
 # :80 e :443 escutam em todas as interfaces do container (0.0.0.0).
 # Assim o mapeamento Docker "80:80" / "443:443" recebe tráfego externo (IP público da EC2)
 # e também continua funcionando com https://localhost no seu notebook.
+#
+# Com `tls internal`, liste os hosts no bloco do site (ex.: localhost e loopbacks).
+# Um bloco só `:443` / `https://` sem nomes costuma não provisionar certificado e o
+# handshake TLS falha (alert "internal error"). Para `https://SEU_IP` na EC2, inclua o
+# IP na lista abaixo ou use domínio + ACME (Let's Encrypt).
 
 :80 {
 	redir https://{host}{uri}
 }
 
-:443 {
+localhost, 127.0.0.1, [::1] {
 	tls internal
 
 	# Todas as chamadas da API passam pelo backend.
