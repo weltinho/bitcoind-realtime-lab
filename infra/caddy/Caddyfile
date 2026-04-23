@@ -5,6 +5,14 @@
 # Com `tls internal`, os nomes do site têm de bater com o host/SNI do browser (incluindo
 # o IPv4 público se aceder por https://IP). A lista vem de CADDY_SITE_ADDRESSES (.env),
 # definida no docker-compose (default: localhost e loopbacks).
+#
+# default_sni: muitos curl (LibreSSL / versões antigas) NÃO enviam SNI ao usar URL só
+# com IPv4; o Caddy precisa de um fallback ou responde com TLS "internal error". Na EC2
+# com https://IP público, defina CADDY_DEFAULT_SNI igual a esse IP (ver .env.example).
+
+{
+	default_sni {$CADDY_DEFAULT_SNI:localhost}
+}
 
 :80 {
 	redir https://{host}{uri}

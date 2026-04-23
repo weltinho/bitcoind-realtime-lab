@@ -46,6 +46,8 @@ O Caddy escuta em **`:80` / `:443`** (qualquer `Host`), para o Docker encaminhar
 
 Para **`https://<IPv4-público>`** (ex. na EC2), o certificado interno tem de incluir esse IP. No `.env`, defina **`CADDY_SITE_ADDRESSES`** com o IP no fim da lista (ver `.env.example`). Depois: `docker compose up -d --force-recreate caddy`.
 
+Muitos clientes **`curl`** (p.ex. LibreSSL no macOS) **não enviam SNI** em URLs só com IPv4; o Caddy pode responder com erro TLS. Defina também **`CADDY_DEFAULT_SNI`** com o **mesmo** IPv4 público (ver `.env.example`).
+
 ## Testes (backend)
 
 Dentro do container (como no dia a dia do projeto):

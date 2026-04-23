@@ -69,6 +69,7 @@ services:
     # público da EC2 para https://SEU_IP (ex.: após vírgula: ", 3.14.159.26").
     environment:
       CADDY_SITE_ADDRESSES: '${CADDY_SITE_ADDRESSES:-localhost, 127.0.0.1, [::1]}'
+      CADDY_DEFAULT_SNI: '${CADDY_DEFAULT_SNI:-localhost}'
     depends_on:
       - frontend
       - backend
